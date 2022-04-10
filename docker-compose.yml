@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  preprocessing:
+    build: .
+    volumes:
+      - .:/usr/app
+    # run continuously in background
+    command: tail -f /dev/null
+    #command: python3 inference_test.py
+    ports:
+      # if want to use use jupyter
+      - 8888:8889
+    environment:
+      - ENVIRONMENT=dev
+      - TESTING=0
+      - LOCAL_DEV=1
+      #- AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      #- AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}

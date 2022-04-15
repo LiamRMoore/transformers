@@ -1,31 +1,41 @@
 # python 3.9
-FROM docker pull huggingface/transformers-gpu:4.19
+FROM huggingface/transformers-gpu:latest
 
-ARG YOUR_ENV="dev"
-
-ENV YOUR_ENV=${YOUR_ENV} \
-  PYTHONFAULTHANDLER=1 \
+ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
   PYTHONHASHSEED=random \
   PIP_NO_CACHE_DIR=off \
   PIP_DISABLE_PIP_VERSION_CHECK=on \
   PIP_DEFAULT_TIMEOUT=100 \
-  POETRY_VERSION=1.1.13
-
-# set working directory
-WORKDIR /usr/app
-
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+  POETRY_VERSION=1.1.13 \
+  PYTHONDONTWRITEBYTECODE=1 \
+  PYTHONUNBUFFERED=1 \
+  HOME="/root" \
+  PYTHON_VERSION=3.7.9
 
 # install system dependencies 
 RUN apt-get update \
-  && apt-get -y install netcat gcc curl make \
+  && DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install \
+  -y --no-install-recommends \
+  make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
+  libsqlite3-dev wget ca-certificates curl llvm libncurses5-dev xz-utils \
+  tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev mecab-ipadic-utf8 \
+  git \
   && apt-get clean
 
-# fix aws security issues
-RUN apt-get install -y --only-upgrade openssl systemd
+# set working directory
+WORKDIR $HOME
+
+# Set-up necessary Env vars for PyEnv
+ENV PYENV_ROOT /root/.pyenv
+ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
+# Install pyenv
+RUN set -ex \
+    && curl https://pyenv.run | bash \
+    && pyenv update \
+    && pyenv install $PYTHON_VERSION \
+    && pyenv global $PYTHON_VERSION \
+    && pyenv rehash
 
 # install poetry
 RUN pip install "poetry==$POETRY_VERSION"
@@ -34,12 +44,27 @@ RUN pip install "poetry==$POETRY_VERSION"
 COPY pyproject.toml poetry.lock*  ./
 
 # venv for multi stage build/wheels
-RUN poetry config virtualenvs.in-project true 
+RUN poetry config virtualenvs.in-project true
 # install python dependencies
-RUN poetry install $(test "$YOUR_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+RUN poetry install --no-interaction --no-ansi
 #RUN poetry lock
+
+ENV NVIDIA_DRIVER_VERSION 495
+ENV NVIDIA_DRIVER nvidia-driver-$NVIDIA_DRIVER_VERSION
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y $NVIDIA_DRIVER
 
 # move local code over
 COPY . .
 
-CMD ["/bin/bash"]
+# notebook port
+EXPOSE 8888
+
+CMD [
+  "poetry",
+  "run",
+  "jupyter-notebook",
+  "--no-browser",
+  "--allow-root",
+  "--ip",
+  "0.0.0.0"
+]

@@ -1,19 +1,23 @@
 version: '3.8'
 
 services:
-  preprocessing:
+  nlp:
     build: .
     volumes:
       - .:/usr/app
     # run continuously in background
-    command: tail -f /dev/null
+    command: poetry run jupyter-notebook --no-browser --allow-root --ip 0.0.0.0
+    #tail -f /dev/null
     #command: python3 inference_test.py
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     ports:
       # if want to use use jupyter
-      - 8888:8889
+      - 8888:8888
     environment:
-      - ENVIRONMENT=dev
-      - TESTING=0
       - LOCAL_DEV=1
-      #- AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      #- AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}

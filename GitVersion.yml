@@ -1,0 +1,9 @@
+
+mode: ContinuousDeployment
+continuous-delivery-fallback-tag: ''
+branches:
+  develop:
+    tag: develop
+ignore:
+  sha: []
+merge-message-formats: {}

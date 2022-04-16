@@ -47,8 +47,7 @@ jobs:
             --name transformers \
             -e ENVIRONMENT=${ENVIRONMENT} \
             --mount type=bind,source="$(pwd)",target=/usr/app \
-            $IMAGE_NAME:$IMAGE_TAG \
-            tail -f /dev/null
+            $IMAGE_NAME:$IMAGE_TAG
       
       # - name: Run Unit tests
       #   run: docker exec transformers make test

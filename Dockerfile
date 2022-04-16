@@ -60,11 +60,11 @@ COPY . .
 EXPOSE 8888
 
 CMD [
-  "poetry",
-  "run",
-  "jupyter-notebook",
-  "--no-browser",
-  "--allow-root",
-  "--ip",
-  "0.0.0.0"
+  "poetry", \
+  "run", \
+  "jupyter-notebook", \
+  "--no-browser", \
+  "--allow-root", \
+  "--ip", \
+  "0.0.0.0" \
 ]

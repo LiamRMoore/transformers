@@ -59,7 +59,7 @@ COPY . .
 # notebook port
 EXPOSE 8888
 
-CMD [
+CMD [ \
   "poetry", \
   "run", \
   "jupyter-notebook", \

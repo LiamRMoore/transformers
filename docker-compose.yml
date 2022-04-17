@@ -4,7 +4,7 @@ services:
   transformers:
     build: .
     volumes:
-      - .:/usr/app
+      - .:/root
     # run continuously in background
     command: poetry run jupyter-notebook --no-browser --allow-root --ip 0.0.0.0
     #tail -f /dev/null

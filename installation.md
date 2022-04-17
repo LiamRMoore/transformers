@@ -15,7 +15,7 @@ If you have a CUDA enabled GPU, you can take advantage of GPU acceleration. If y
 
 ## Launch container
 
-Launch the container (with GPU support) in the background with:
+Build the image (if not already) and launch the container (with GPU support) in the background with:
 
 `docker-compose up -d`
 

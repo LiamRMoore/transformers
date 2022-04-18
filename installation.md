@@ -22,3 +22,5 @@ Build the image (if not already) and launch the container (with GPU support) in 
 This will run a notebook server in a docker container with all the necessary libraries. You can get the URL for the running notebook server by then running:
 
 `docker-compose logs transformers`
+
+The course directory is a bound volume in the container so any additions or changes made within there will persist on your local disk.

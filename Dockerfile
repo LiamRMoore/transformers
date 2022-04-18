@@ -47,8 +47,8 @@ COPY pyproject.toml poetry.lock*  ./
 RUN poetry config virtualenvs.in-project true
 # install python dependencies
 RUN poetry install --no-interaction --no-ansi
-#RUN poetry lock
 
+# install NVIDIA driver version in container
 ENV NVIDIA_DRIVER_VERSION 495
 ENV NVIDIA_DRIVER nvidia-driver-$NVIDIA_DRIVER_VERSION
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y $NVIDIA_DRIVER

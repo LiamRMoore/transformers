@@ -10,7 +10,7 @@ ENV PYTHONFAULTHANDLER=1 \
   POETRY_VERSION=1.1.13 \
   PYTHONDONTWRITEBYTECODE=1 \
   PYTHONUNBUFFERED=1 \
-  HOME="/root" \
+  WORKDIR="/usr/app" \
   PYTHON_VERSION=3.7.9
 
 # install system dependencies 
@@ -24,10 +24,10 @@ RUN apt-get update \
   && apt-get clean
 
 # set working directory
-WORKDIR $HOME
+WORKDIR $WORKDIR
 
 # Set-up necessary Env vars for PyEnv
-ENV PYENV_ROOT /root/.pyenv
+ENV PYENV_ROOT $WORKDIR/.pyenv
 ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
 # Install pyenv
 RUN set -ex \
@@ -54,7 +54,7 @@ ENV NVIDIA_DRIVER nvidia-driver-$NVIDIA_DRIVER_VERSION
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y $NVIDIA_DRIVER
 
 # move local code over
-COPY . .
+COPY . . 
 
 # notebook port
 EXPOSE 8888

@@ -20,3 +20,4 @@ services:
       - 8888:8888
     environment:
       - LOCAL_DEV=1
+    container_name: transformers

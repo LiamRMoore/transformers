@@ -47,11 +47,15 @@ COPY pyproject.toml poetry.lock*  ./
 RUN poetry config virtualenvs.in-project true
 # install python dependencies
 RUN poetry install --no-interaction --no-ansi
+# jupyter themes for nice notebook
+RUN poetry run jt -t chesterish -cellw 95%
+RUN poetry run jupyter contrib nbextension install --user
 
 # install NVIDIA driver version in container
 ENV NVIDIA_DRIVER_VERSION 495
 ENV NVIDIA_DRIVER nvidia-driver-$NVIDIA_DRIVER_VERSION
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y $NVIDIA_DRIVER
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --fix-missing $NVIDIA_DRIVER
 
 # move local code over
 COPY . . 

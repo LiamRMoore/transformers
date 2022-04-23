@@ -1,5 +1,5 @@
 # python 3.9
-FROM uggingface/transformers-tensorflow-gpu:latest
+FROM huggingface/transformers-tensorflow-gpu:latest
 #huggingface/transformers-gpu:latest
 
 ENV PYTHONFAULTHANDLER=1 \

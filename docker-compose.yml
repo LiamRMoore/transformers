@@ -6,6 +6,7 @@ services:
     volumes:
       #- .:/usr/app
       - ./course:/usr/app/course
+      - $HOME/.kaggle:/root/.kaggle
     # run continuously in background
     command: poetry run jupyter-notebook --no-browser --allow-root --ip 0.0.0.0
     deploy:

@@ -60,7 +60,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --fix-missing $NVIDIA_DRIV
 
 # copy over kaggle credentials
 RUN mkdir /root/.kaggle
-COPY kaggle.json* /root/.kaggle/
 
 # move local code over
 COPY . . 

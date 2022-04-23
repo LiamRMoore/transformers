@@ -57,6 +57,10 @@ ENV NVIDIA_DRIVER nvidia-driver-$NVIDIA_DRIVER_VERSION
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --fix-missing $NVIDIA_DRIVER
 
+# copy over kaggle credentials
+RUN mkdir /root/.kaggle
+COPY kaggle.json* /root/.kaggle/
+
 # move local code over
 COPY . . 
 

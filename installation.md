@@ -11,7 +11,7 @@ If you have a CUDA enabled GPU, you can take advantage of GPU acceleration. If y
 
 2. Confirm installation and that your GPU is detected. On Linux, you can do this by running `nvidia-smi`.
 
-3. Finally, install [https://github.com/NVIDIA/nvidia-docker](NVIDIA Container Toolkit).
+3. Finally, install [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker).
 
 ## Launch container
 

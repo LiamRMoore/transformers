@@ -4,7 +4,14 @@
 
 Here are the updated [installation instructions](installation.md).
 
-Original text follows:
+## TODO:
+
+- Finish section 9 assignment
+- Finish sections 11 and 12
+- Update pyproject.toml with valid sentence transformers, haystack etc. test earlier notebooks to ensure a simple build installs everything.
+- *Optional* clean up notebooks and code therein, incl. new simpler APIs for tokenizers etc
+
+# Original text:
 
 Repo for the *Natural Language Processing: NLP With Transformers in Python* course, you can get 70% off the price with [this link!](https://www.udemy.com/course/nlp-with-transformers/?couponCode=70SEP2021) If the link stops working raise an issue or drop me a message somewhere:
 
@@ -12,3 +19,4 @@ Repo for the *Natural Language Processing: NLP With Transformers in Python* cour
 | [Discord](https://discord.gg/c5QtDB9RAP)
 
 I also have plenty of free material on YouTube 😊
+
